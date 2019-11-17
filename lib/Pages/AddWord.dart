@@ -31,7 +31,7 @@ class _AddWordState extends State<AddWord> {
     return SafeArea(
           child: Scaffold(
          appBar: AppBar(
-          title: Text("banana"),
+          title: Text("Add word"),
         ),
         body: Center(
          child: Column(
@@ -67,6 +67,12 @@ class _AddWordState extends State<AddWord> {
                 decoration:InputDecoration(hintText: "Please enter a translation" ),
               ),
             ),
+            RaisedButton(
+                  elevation: 4,
+                  splashColor: Colors.blueGrey,
+                  onPressed: () => {}, ////////////////////////////SQL
+                  child:Text("     Save     "),
+                ),
             Container(
               height: 50,
               width: 250,
