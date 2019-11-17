@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AddWord extends StatefulWidget {
 
@@ -72,10 +74,6 @@ class _AddWordState extends State<AddWord> {
           ],
         ) ,
       ),
-       floatingActionButton: FloatingActionButton(
-              onPressed: () => {},  ////////////SQL
-              tooltip: 'increment',
-            ),
       ),
     );
   }
