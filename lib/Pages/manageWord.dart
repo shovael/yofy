@@ -38,7 +38,7 @@ class _NoteListState extends State<NoteList> {
             title: Text("boboboboboobobob", style: titleStyle,),
             trailing: Icon(Icons.delete, color: Colors.black),
             onTap: () {
-              debugPrint("ListTile Tapped")
+              debugPrint("ListTile Tapped");
             }
           ),
         );
