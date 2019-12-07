@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yofy/Pages/AddWord.dart';
-
+import 'package:yofy/Pages/manageWord.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -47,7 +47,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 15,
                 ),
                 RaisedButton(
-                  onPressed: () => {},
+                  onPressed: () => {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => NoteList() )) /////change later for manage word
+                  },
                   child: Text(
                     "List",
                     ),

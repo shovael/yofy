@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:yofy/main.dart';
 
 class AddWord extends StatefulWidget {
 
@@ -28,7 +29,11 @@ class _AddWordState extends State<AddWord> {
   }
   
   Widget build(BuildContext context) { 
-    return SafeArea(
+    return WillPopScope(
+      onWillPop: () {
+        print("finish writng women");
+      },
+    child: SafeArea(
           child: Scaffold(
          appBar: AppBar(
           title: Text("Add word"),
@@ -70,7 +75,12 @@ class _AddWordState extends State<AddWord> {
             RaisedButton(
                   elevation: 4,
                   splashColor: Colors.blueGrey,
-                  onPressed: () => {}, ////////////////////////////SQL
+                  onPressed: () => {
+                    setState((){
+                      debugPrint('save buton clicked'); ////////////////////////////SQL
+                    }),
+                    Navigator.of(context).pop(),
+                  },
                   child:Text("     Save     "),
                 ),
             Container(
@@ -81,7 +91,7 @@ class _AddWordState extends State<AddWord> {
         ) ,
       ),
       ),
-    );
+   ) );
   }
 
 }

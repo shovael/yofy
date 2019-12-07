@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:yofy/object/note.dart';
+import 'package:yofy/Services/database_creator.dart';
+import 'package:yofy/Services/db_helper.dart';
 ///////////////////////////////////////////change NOteList to ManageWord
 class NoteList extends StatefulWidget {
 
@@ -19,6 +22,13 @@ class _NoteListState extends State<NoteList> {
         title: Text("Managae word"),
       ),
       body: getNoteListview(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          debugPrint('FAB clicked');
+      },
+      tooltip: 'Add Note',
+      child: Icon(Icons.add),
+      ),
     );
   }
 
