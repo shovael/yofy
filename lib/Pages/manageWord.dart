@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:yofy/object/note.dart';
-import 'package:yofy/Services/database_creator.dart';
 import 'package:yofy/Services/db_helper.dart';
 ///////////////////////////////////////////change NOteList to ManageWord
 class NoteList extends StatefulWidget {
 
   @override
-  _NoteListState createState() => _NoteListState();
- 
+  _NoteListState createState() => _NoteListState(); 
   }
   
 
 class _NoteListState extends State<NoteList> {
+  DBHelper databaseHelper = DBHelper();
+  List<Note> noteList;
   int count = 0;
   
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+
+    if(noteList == null){
+      noteList = List<Note>();
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text("Managae word"),
@@ -43,17 +46,30 @@ class _NoteListState extends State<NoteList> {
           child: ListTile(
             leading: CircleAvatar( /////////not needed
               backgroundColor: Colors.blue ,
-              child: Icon(Icons.access_alarm),
+              child: Icon(Icons.adjust),
             ),
-            title: Text("boboboboboobobob", style: titleStyle,),
-            trailing: Icon(Icons.delete, color: Colors.black),
-            onTap: () {
-              debugPrint("ListTile Tapped");
-            }
+            title: Text(this.noteList[position].eWord,style: titleStyle,),
+            subtitle: Text(this.noteList[position].hWord),
+            trailing: GestureDetector( 
+            child: Icon(Icons.delete, color: Colors.black),
+            onTap: () => _delete(context, noteList[position]),            
+          ),
           ),
         );
       }
     );
   }
+
+  void _delete(BuildContext CONTEXT, Note note) async{
+    int result = await databaseHelper.deleteNote(note.id);
+    if(result !=0) {
+    _showSnackBar(context, 'Word Deleted');
+  }}
+
+  void _showSnackBar(BuildContext context, String message){
+    final snackBar = SnackBar(content: Text(message),);
+    Scaffold.of(context).showSnackBar(snackBar);
+  }
+
 }
   
