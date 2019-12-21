@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:yofy/Services/db_helper.dart';
 import 'package:yofy/main.dart';
+import 'package:yofy/object/note.dart';
 
 class AddWord extends StatefulWidget {
 
@@ -14,7 +16,10 @@ class AddWord extends StatefulWidget {
 
 class _AddWordState extends State<AddWord> {
   final wordController = TextEditingController();
-  final trasnlateController = TextEditingController();
+  final eTrasnlateController = TextEditingController();
+  final hTrasnlateController = TextEditingController();
+  DBHelper help = DBHelper();
+  
   
   openUrl()async {
     print(wordController.text);
@@ -67,19 +72,19 @@ class _AddWordState extends State<AddWord> {
                       SizedBox(
               height: 50,
               width: 250 ,
-              child: TextField(
-                controller: trasnlateController,
-                decoration:InputDecoration(hintText: "Please enter a translation" ),
-              ),
+                  child:TextField(
+                    controller: eTrasnlateController,
+                    decoration:InputDecoration(hintText: "Please enter a english translation" ),
+                  ),
             ),
             RaisedButton(
                   elevation: 4,
                   splashColor: Colors.blueGrey,
                   onPressed: () => {
                     setState((){
-                      debugPrint('save buton clicked'); ////////////////////////////SQL
+                      _save();
                     }),
-                    Navigator.of(context).pop(),
+                    Navigator.pop(context),
                   },
                   child:Text("     Save     "),
                 ),
@@ -92,6 +97,11 @@ class _AddWordState extends State<AddWord> {
       ),
       ),
    ) );
+  }
+  void _save() async {
+    int result;
+    Note b = new Note(0, eTrasnlateController.text, hTrasnlateController.text); ///////change id
+    result = await help.insertNote(b);
   }
 
 }

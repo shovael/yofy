@@ -24,7 +24,7 @@ class Note{
     map['hWord'] = _hWord;
     return map;
   }
-  fromMap(Map<String, dynamic> map){
+   fromMap(Map<String, dynamic> map){
     this._id = map['id'];
     this._eWord =  map['eWord'];
     this._hWord =  map['hWord'];

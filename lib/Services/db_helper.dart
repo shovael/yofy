@@ -1,9 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
-import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
-import 'package:intl/intl.dart';
 import 'package:yofy/object/note.dart';
 
 class DBHelper{
@@ -81,6 +79,14 @@ class DBHelper{
     List<Map<String, dynamic>> x = await db.rawQuery('SELECT COUNT (*) FROM $noteTable');
     int result = Sqflite.firstIntValue(x);
     return result;
+  }
+  Future<List<Note>> getNoteList() async{
+    var noteMapList = await getNoteMapList();
+    List<Note> noteList = List<Note>();
+    for(int a=0; a<noteMapList.length; a++){
+      noteList[a] = new Note(noteMapList[a]["id"], noteMapList[a]["eWord"],noteMapList[a]["hWord"]);//may be  problme
+    } 
+    return noteList;
   }
 
 }

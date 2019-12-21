@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:yofy/object/note.dart';
 import 'package:yofy/Services/db_helper.dart';
+import 'package:sqflite/sqflite.dart';
+import 'dart:async';
+import 'AddWord.dart';
 ///////////////////////////////////////////change NOteList to ManageWord
 class NoteList extends StatefulWidget {
 
@@ -13,12 +16,17 @@ class _NoteListState extends State<NoteList> {
   DBHelper databaseHelper = DBHelper();
   List<Note> noteList;
   int count = 0;
-  
+  @override
+  void initState() {
+    // TODO: implement initState
+    updateListView();
+  }
   @override
   Widget build(BuildContext context) {
 
     if(noteList == null){
       noteList = List<Note>();
+      updateListView();
     }
     return Scaffold(
       appBar: AppBar(
@@ -27,7 +35,7 @@ class _NoteListState extends State<NoteList> {
       body: getNoteListview(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          debugPrint('FAB clicked');
+           Navigator.push(context, MaterialPageRoute(builder: (context) => AddWord() ));
       },
       tooltip: 'Add Note',
       child: Icon(Icons.add),
@@ -64,12 +72,27 @@ class _NoteListState extends State<NoteList> {
     int result = await databaseHelper.deleteNote(note.id);
     if(result !=0) {
     _showSnackBar(context, 'Word Deleted');
+    updateListView();
   }}
 
   void _showSnackBar(BuildContext context, String message){
     final snackBar = SnackBar(content: Text(message),);
     Scaffold.of(context).showSnackBar(snackBar);
   }
-
+  
+  void updateListView() async{//may be a problem
+    DBHelper a;
+    final Future<Database> dbFuture = a.initializeDatabase();
+    dbFuture.then((database) { //may need to be databaseHelper
+      Future<List<Note>> noteListFuture = a.getNoteList();
+      noteListFuture.then((noteList){
+      setState((){
+        this.noteList = noteList;
+        this.count = noteList.length;
+      });
+      });
+    }
+    );
+  }
 }
   
